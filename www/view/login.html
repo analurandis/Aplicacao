@@ -1,0 +1,85 @@
+<script src="js/jquery.validate.min.js"></script>
+<script>
+    $('#form1').validate({
+    rules: {
+				
+        login: { required: true, minlength: 3 },
+	    senha: { required: true, minlength: 3 }
+			
+			},
+			messages: {
+				login: { required: 'Informe seu login', minlength: 'No mínimo 3 caracteres' },
+				senha: { required: 'Informe sua senha', minlength: 'No mínimo 3 caracteres' }
+			},
+    errorPlacement: function (error, element) {
+        error.appendTo(element.parent());
+    },
+    submitHandler: function (form) {
+          var login_field_value = $("#login").val();
+            var senha_field_value = $("#senha").val();
+            var storage = window.localStorage;
+            var jwt = storage.getItem('token');
+            alert(jwt);
+            var JSONdata = {
+                "login": login_field_value,
+                "senha": senha_field_value,
+                "jwt": jwt,
+            };
+            alert(JSON.stringify(JSONdata));
+            $.ajax({
+                type: "post",
+                url: "http://192.168.0.11//Usuarios/ValidarUsuario",
+                data: { 'dados': JSONdata },
+                dataType: "json",
+                success: function (resultado) {
+                    if (resultado["retorno"] == "Senha ou usuário inválido") {
+                        alert(resultado["retorno"]);
+                    };
+                    if (resultado["retorno"] == "Token Inválido") {
+                        alert(resultado["retorno"]);
+                    };
+                    if (resultado["retorno"] == "Login realizado com sucesso") {
+                         alert(resultado["retorno"]);
+                       
+                        var storage = window.localStorage;
+                       
+                         self.renderPaginaInicial();
+                        
+                    };
+              },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                }
+
+            });
+        return false;
+    }
+});
+</script>
+    <!-- TELA LOGIN -->
+<div class="divLogin">
+    <div class="formularioLogin" >
+       
+            <div align="center">
+                <img class='profile-background' src="img/logo_hoseki.png">
+            </div>
+        <form id="form1"  action="logar()" method="post">
+
+           
+            <fieldset data-role="fieldcontainer">
+                <label for="login">Login</label>
+                <input id="login" name="login" type="text" class="ui-input-text form-control "  />
+            </fieldset>
+            <fieldset data-role="fieldcontainer">
+                <label for="senha">Senha</label>
+                <input id="senha" name="senha" type="password" class="ui-input-text form-control " />
+            </fieldset>
+            <button id="logar" class="ui-input-btn ui-btn">Login </button>
+           
+        </form>
+    </div>
+</div>
+    <!-- TELA LOGIN -->
+
+
+

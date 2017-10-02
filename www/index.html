@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        
+        <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+        <meta http-equiv="Access-Control-Allow-Headers" content="Content-Type" />
+        <meta http-equiv="Access-Control-Allow-Methods" content="POST" />
+        <meta http-equiv="Access-Control-Allow-Methods" content="POST" />
+        <meta name="format-detection" content="telephone=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        
+        <link rel="stylesheet" href="css/jquery.mobile.min.css" />
+        <link rel="stylesheet" href="vendor/waves/waves.min.css" />
+         <link rel="stylesheet" href="vendor/wow/animate.css" />
+        <link rel="stylesheet" href="css/nativedroid2.css" />
+        <link rel="stylesheet" href="css/nativedroid2.color.light-blue.css" />
+        
+       
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/jquery.mobile.min.js"></script>
+        <script src="vendor/waves/waves.min.js"></script>
+        <script src="vendor/wow/wow.min.js"></script>
+        <script src="js/nativedroid2.js"></script>
+        <script src="js/script.js"></script>
+        <script src="js/nd2settings.js"></script>
+        <script src="js/core.js"></script>
+        <script src="js/enc-base64.js"></script>
+        <script src="js/hmac.js"></script>
+        <script src="js/sha256.js"></script>
+        <script src="cordova.js"></script>
+        <script src="js/Controller.js"></script>
+        <script src="js/index.js"></script>
+
+    </head>
+    <body >
+
+        <div data-role="page" class="pagina">
+<!-- panel left -->
+            <div data-role="panel" id="leftpanel" data-display="overlay" data-position-fixed="true" >
+
+                <div class='nd2-sidepanel-profile wow fadeInDown'>
+                    <img class='profile-background' src="img/logo.png">
+                    <div class="row">
+                        <div class='col-xs-4 center-xs'>
+                            <div class='box'>
+                                <img class="profile-thumbnail" src="img/logo.png" />
+                            </div>
+                        </div>
+                        <div class='col-xs-8'>
+                            <div class='box profile-text'>
+                                <strong>Empresa</strong>
+                                <span class='subline'>Usuário</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <ul data-role="listview" data-inset="false">
+                    <li data-role="list-divider">Elements</li>
+                </ul>
+                <div data-role="collapsible" data-inset="false"  data-collapsed-icon="carat-d" data-expanded-icon="carat-d" data-iconpos="right">
+                    <h3>Basic Elements</h3>
+                    <ul data-role="listview" data-inset="false" data-icon="false">
+                        <li><a href="/examples/elements/text.html" data-ajax='false' data-icon="false">Text Elements</a></li>
+                        
+                    </ul>
+                </div>
+                <div data-role="collapsible" data-inset="false" data-collapsed-icon="carat-d" data-expanded-icon="carat-d" data-iconpos="right">
+                    <h3>Extended Elements</h3>
+                    <ul data-role="listview" data-icon="false">
+                        <li><a href="/examples/extended/tabs.html" data-ajax='false'>Tabs</a></li>
+                    </ul>
+                </div>
+                <ul data-role="listview" data-inset="false">
+                    <li data-role="list-divider">Layouts</li>
+                </ul>
+                <div data-role="collapsible" data-inset="false" data-collapsed-icon="carat-d" data-expanded-icon="carat-d" data-iconpos="right">
+                    <h3>Real-World-Examples</h3>
+                    <ul data-role="listview" data-icon="false">
+                        <li><a href="/examples/pages/profile.html" class="ui-disabled" data-ajax='false'>Profile</a></li>
+                    </ul>
+                </div>
+                <hr class="inset">
+                <ul data-role="listview" data-inset="false">
+                    <li data-role="list-divider">Information</li>
+                </ul>
+                <div data-role="collapsible" data-inset="false" data-collapsed-icon="carat-d" data-expanded-icon="carat-d" data-iconpos="right">
+                    <h3>Nice to Know</h3>
+                    <ul data-role="listview" data-icon="false">
+                        <li><a href="/info/colors_and_styles.html" data-ajax='false'>Colors &amp; Styles</a></li>
+                        <li><a href="/info/credits.html" data-ajax='false'>Credits &amp; License</a></li>
+                    </ul>
+                </div>
+            </div>
+<!-- /panel left -->
+
+            <!-- nav bar -->
+            <div id="nav-bar">
+                <div data-role="header" data-position="fixed" class="nav-bar">
+                    <a href="#leftpanel" class="ui-btn ui-btn-left icone"><span class="zmdi zmdi-menu"></span></a>
+                    <h1 class="nav-bar-text">Inicio</h1>
+                </div>
+            </div>
+            <!-- nav bar -->
+            <div class="ui-content">
+
+            </div>
+
+    </body>
+</html>

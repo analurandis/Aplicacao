@@ -1,0 +1,86 @@
+<!-- TELA LOGIN GERAR TOKEN-->
+
+            <div role="main" class="ui-content TelaLoginToken" data-inset="false" >
+                <br>
+                <div align="center"> 
+                    <img class='profile-background' src="img/logo.png">
+                </div>
+                <br>
+
+                <label>Login</label>
+                <input id="login_field" name="login_field" type="text"  />
+                <label>Senha</label>
+                <input id="senha_field" name="senha_field" type="password" />
+                <br>
+                <button class=" ui-btn ui-btn-b" onclick="cadastrarToken()">Login</button>
+              </div>
+<!-- TELA LOGIN GERAR TOKEN-->
+
+<script type="text/javascript">
+            function getBase64Encode(rawStr){
+                var wordArray = CryptoJS.enc.Utf8.parse(JSON.stringify(rawStr));
+                var result = CryptoJS.enc.Base64.stringify(wordArray);
+                return result;
+            };
+             
+             function getBase64Decode(rawStr){
+                var wordArray =CryptoJS.enc.Base64.parse(rawStr);
+                var result = wordArray.toString(CryptoJS.enc.Utf8);
+                return result
+            };
+            
+            function cadastrarToken()
+            {
+                var login_field_value=$("#login_field").val();
+                var senha_field_value=$("#senha_field").val();
+                var header = {
+                    "alg": "HS256",
+                    "typ": "JWT"};
+                var payload ={
+                    "uuid": device.uuid,
+                    "model":device.model,
+                    "platform":device.platform
+                };
+                var headerBase64 = getBase64Encode(header);
+                var payloadBase64 = getBase64Encode(payload);
+                var signature=CryptoJS.HmacSHA256(headerBase64 +"."+ payloadBase64 , senha_field_value)
+                var signatureBase64 = CryptoJS.enc.Base64.stringify(signature);
+                var jwt = headerBase64 + "." +payloadBase64+"."+signatureBase64;
+
+                var JSONdata = {
+                    "login":login_field_value,
+                    "senha":senha_field_value,
+                    "jwt": jwt
+                };
+                alert(JSON.stringify(JSONdata));
+                
+                $.ajax({
+                type: "post",
+                url: "http://192.168.0.10//Usuarios/CadastrarDispositivo", 
+                data: { 'token': JSONdata },         
+                dataType: "json", 
+                success: function(resultado){  
+                    if(resultado["retorno"]=="Senha ou usuário inválido"){
+                        alert(resultado["retorno"]);
+                     };
+                      if(resultado["retorno"]=="Token Inválido"){
+                        alert(resultado["retorno"]);
+                     };
+                    if(resultado["retorno"]=="Login realizado com sucesso"){
+                        $(".TelaLoginToken").hide();
+                        $(".BarraAcima").html('Pagina Inicial');
+                        var storage = window.localStorage;
+                        alert(JSONdata['jwt']);
+                        var storage = window.localStorage;
+                        var token = JSONdata['jwt'];
+                        storage.setItem('token', token ); 
+
+                    };                  
+                 },
+                error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                    alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+                } 
+          
+            });
+            }
+ </script>

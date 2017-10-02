@@ -1,0 +1,143 @@
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.js"></script>
+<script type="text/javascript">
+        $(document).ready(function(){
+            $('#formularioLogin').validate({
+                rules: {
+                    nome: { required: true, minlength: 2 },
+                    senha: { required: true, email: true }
+                  
+                },
+                messages: {
+                    nome: { required: 'Preencha o campo nome', minlength: 'No mínimo 2 letras' },
+                    senha: { required: 'Informe o seu email', email: 'Ops, informe um email válido' }
+                  
+                },
+                submitHandler: function (form) {
+                    var dados = $(form).serialize();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "processa.php",
+                        data: dados,
+                        success: function (data) {
+                            alert(data);
+                        }
+                    });
+
+                    return false;
+                }
+            });
+        });
+
+
+
+</script>
+    <!-- TELA LOGIN -->
+<div class="divLogin">
+    <div class="formularioLogin" >
+        <form id="formularioLogin ">
+            <div align="center">
+                <img class='profile-background' src="img/logo_hoseki.png">
+            </div>
+            <fieldset data-role="fieldcontain">
+                <label for="login">Login</label>
+                <input id="login" name="login" type="text" class="ui-input-text form-control " required minlength="5" />
+            </fieldset>
+            <fieldset data-role="fieldcontain">
+                <label for="senha">Senha</label>
+                <input id="senha" name="senha" type="password" class="ui-input-text form-control " required minlength="5" />
+            </fieldset>
+            <button class="ui-input-btn ui-btn " onclick="logar()">Login </button>
+        </form>
+    </div>
+</div>
+    <!-- TELA LOGIN -->
+
+
+
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/jquery.validate.min.js"></script>
+<script>
+        $(function () {
+            $("#formularioLogin").validate();
+        });
+        $(".formularioLogin").validate({
+            rules: {
+                login: {
+                    required: true,
+                    minlength: 5
+                },
+                senha: {
+                    required: true,
+                    minlength: 5
+                }
+            },
+            messages: {
+                login: {
+                    required: "Por favor, informe seu login",
+                    minlength: "O login deve ter pelo menos 5 caracteres"
+                },
+                senha: {
+                    required: "A senha não pode ficar em branco",
+                    minlength: "A senha deve ter pelo menos 5 caracteres"
+                }
+            }
+        });
+
+
+
+
+        function logar() {
+            $(function () {
+                $("#formularioLogin").validate();
+            });
+
+            var login_field_value = $("#login").val();
+            var senha_field_value = $("#senha").val();
+            var storage = window.localStorage;
+            var jwt = storage.getItem('token');
+            alert(jwt);
+            var JSONdata = {
+                "login": login_field_value,
+                "senha": senha_field_value,
+                "jwt": jwt,
+            };
+            alert(JSON.stringify(JSONdata));
+            $.ajax({
+                type: "post",
+                url: "http://192.168.0.10//Usuarios/ValidarUsuario",
+                data: { 'dados': JSONdata },
+                dataType: "json",
+                success: function (resultado) {
+                    if (resultado["retorno"] == "Senha ou usuário inválido") {
+                        alert(resultado["retorno"]);
+                    };
+                    if (resultado["retorno"] == "Token Inválido") {
+                        alert(resultado["retorno"]);
+                    };
+                    if (resultado["retorno"] == "Login realizado com sucesso") {
+                        $(".TelaLogin").hide();
+                        $(".BarraAcima").html('Pagina Inicial');
+
+                    };
+
+
+
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                }
+
+            });
+        }
+
+
+
+
+
+</script>
+

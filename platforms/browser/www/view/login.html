@@ -1,0 +1,72 @@
+
+<!-- TELA LOGIN -->
+            <div role="main" class="ui-content TelaLogin" data-inset="false" >
+                <br>
+                <div align="center"> 
+                    <img class='profile-background' src="img/logo.png">
+                </div>
+                <br>
+                <label>Login</label>
+                <input id="login_field2" name="login_field" type="text"  />
+                <label>Senha</label>
+                <input id="senha_field2" name="senha_field" type="password" />
+                <br>
+                <div class="form-group">
+                    <label for="company">Company</label>
+                    <input type="text" class="form-control" id="company"
+                           placeholder="Company">
+                </div>
+                <button class="ui-input-btn ui-btn ui-btn-b" onclick="logar()">Login </button>
+            </div>
+
+<!-- TELA LOGIN -->
+
+
+<script>
+        
+            function logar()
+            {
+                var login_field_value=$("#login_field2").val();
+                var senha_field_value=$("#senha_field2").val();
+                var storage = window.localStorage;
+                var jwt = storage.getItem('token');
+                alert(jwt);
+                var JSONdata = {
+                    "login":login_field_value,
+                    "senha":senha_field_value,
+                    "jwt": jwt,
+                };
+
+                alert(JSON.stringify(JSONdata));
+                $.ajax({
+                type: "post",
+                url: "http://192.168.0.10//Usuarios/ValidarUsuario", 
+                data: { 'dados': JSONdata },         
+                dataType: "json", 
+                success: function(resultado){ 
+                    if(resultado["retorno"]=="Senha ou usuário inválido"){
+                        alert(resultado["retorno"]);
+                     };
+                    if(resultado["retorno"]=="Token Inválido"){
+                        alert(resultado["retorno"]);
+                     };
+                    if(resultado["retorno"]=="Login realizado com sucesso"){
+                        $(".TelaLogin").hide(); 
+                        $(".BarraAcima").html('Pagina Inicial');
+
+                    };
+                    
+                   
+                   
+                                      
+                 },
+                error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                    alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+                } 
+          
+            });
+        }
+         
+         
+
+        </script>
